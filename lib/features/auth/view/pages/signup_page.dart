@@ -10,6 +10,16 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(),
+      body: Column(
+        children: [
+          const Text(
+            "Sign up",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 44),
+          ),
+        ],
+      ),
+    );
   }
 }
