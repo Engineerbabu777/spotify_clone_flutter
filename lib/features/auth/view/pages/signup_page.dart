@@ -11,52 +11,74 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+    // formKey.currentState!.validate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Sign up",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 44),
-            ),
-            const SizedBox(height: 30),
-
-            // FIELDS!
-            CustomField(hintText: "Name"),
-            const SizedBox(height: 20),
-
-            CustomField(hintText: "Email"),
-            const SizedBox(height: 20),
-
-            CustomField(hintText: "Password"),
-            const SizedBox(height: 20),
-
-            // BUTTONS!
-            AuthGradientButton(fnHandler: () {}, text: "SIgnUp"),
-
-            const SizedBox(height: 20),
-            RichText(
-              text: TextSpan(
-                style: Theme.of(context).textTheme.titleMedium,
-
-                children: [
-                  TextSpan(text: "Already have an account? "),
-                  TextSpan(
-                    text: "Sign In",
-                    style: TextStyle(
-                      color: Pallete.gradient2,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Sign up",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 44),
               ),
-            ),
-          ],
+              const SizedBox(height: 30),
+
+              // FIELDS!
+              CustomField(hintText: "Name", controller: nameController),
+              const SizedBox(height: 20),
+
+              CustomField(hintText: "Email", controller: emailController),
+              const SizedBox(height: 20),
+
+              CustomField(
+                hintText: "Password",
+                controller: passwordController,
+                isObscure: true,
+              ),
+              const SizedBox(height: 20),
+
+              // BUTTONS!
+              AuthGradientButton(fnHandler: () {}, text: "SIgnUp"),
+
+              const SizedBox(height: 20),
+              RichText(
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.titleMedium,
+
+                  children: [
+                    TextSpan(text: "Already have an account? "),
+                    TextSpan(
+                      text: "Sign In",
+                      style: TextStyle(
+                        color: Pallete.gradient2,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
