@@ -4,6 +4,12 @@ import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
 
 class SigninPage extends StatefulWidget {
+  static MaterialPageRoute route() => MaterialPageRoute(
+    builder: (context) {
+      return SigninPage();
+    },
+  );
+
   const SigninPage({super.key});
 
   @override
@@ -61,9 +67,9 @@ class _SigninPageState extends State<SigninPage> {
                   style: Theme.of(context).textTheme.titleMedium,
 
                   children: [
-                    TextSpan(text: "Already have an account? "),
+                    TextSpan(text: "Don't have an account? "),
                     TextSpan(
-                      text: "Sign In",
+                      text: "Sign Up",
                       style: TextStyle(
                         color: Pallete.gradient2,
                         fontWeight: FontWeight.bold,

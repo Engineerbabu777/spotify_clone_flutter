@@ -4,6 +4,11 @@ import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
+  static MaterialPageRoute route() => MaterialPageRoute(
+    builder: (context) {
+      return SignUpPage();
+    },
+  );
   const SignUpPage({super.key});
 
   @override
