@@ -66,20 +66,25 @@ class _SignUpPageState extends State<SignUpPage> {
               AuthGradientButton(fnHandler: () {}, text: "SIgnUp"),
 
               const SizedBox(height: 20),
-              RichText(
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.titleMedium,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, SignUpPage.route());
+                },
+                child: RichText(
+                  text: TextSpan(
+                    style: Theme.of(context).textTheme.titleMedium,
 
-                  children: [
-                    TextSpan(text: "Already have an account? "),
-                    TextSpan(
-                      text: "Sign In",
-                      style: TextStyle(
-                        color: Pallete.gradient2,
-                        fontWeight: FontWeight.bold,
+                    children: [
+                      TextSpan(text: "Already have an account? "),
+                      TextSpan(
+                        text: "Sign In",
+                        style: TextStyle(
+                          color: Pallete.gradient2,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
