@@ -1,6 +1,6 @@
-class Failure {
+class AppFailure {
   final String message;
   // final int statusCode;
 
-  Failure([this.message = "Sorry, an unexpected error occured!"]);
+  AppFailure([this.message = "Sorry, an unexpected error occured!"]);
 }

@@ -1,19 +1,20 @@
 import 'dart:convert';
 
+import 'package:client/core/constants/server_constant.dart';
 import 'package:client/core/failure/failure.dart';
 import 'package:client/features/auth/model/user_model.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:http/http.dart' as http;
 
 class AuthRemoteRepositories {
-  Future<Either<Failure, UserModel>> signup({
+  Future<Either<AppFailure, UserModel>> signup({
     required String name,
     required String email,
     required String password,
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:8000/auth/signup'),
+        Uri.parse('${ServerConstant.serverURL}/auth/signup'),
         headers: {'Content-Type': 'applcation/json'},
         body: jsonEncode({'name': name, 'email': email, 'password': password}),
       );
@@ -22,23 +23,23 @@ class AuthRemoteRepositories {
 
       if (response.statusCode != 201) {
         // HANDLE THE ERROR!
-        return Left(Failure(resBodyMap['detail']));
+        return Left(AppFailure(resBodyMap['detail']));
       }
 
       return Right(UserModel.fromMap(resBodyMap));
     } catch (e) {
       print(e.toString());
-      return Left(Failure(e.toString()));
+      return Left(AppFailure(e.toString()));
     }
   }
 
-  Future<Either<Failure, UserModel>> login({
+  Future<Either<AppFailure, UserModel>> login({
     required String email,
     required String password,
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:8000/auth/login'),
+        Uri.parse('${ServerConstant.serverURL}/auth/login'),
         headers: {'Content-Type': 'applcation/json'},
         body: jsonEncode({'email': email, 'password': password}),
       );
@@ -47,13 +48,13 @@ class AuthRemoteRepositories {
 
       if (response.statusCode != 201) {
         // HANDLE THE ERROR!
-        return Left(Failure(resBodyMap['detail']));
+        return Left(AppFailure(resBodyMap['detail']));
       }
 
       return Right(UserModel.fromMap(resBodyMap));
     } catch (e) {
       print(e.toString());
-      return Left(Failure(e.toString()));
+      return Left(AppFailure(e.toString()));
     }
   }
 }
