@@ -30,7 +30,6 @@ class _SigninPageState extends State<SigninPage> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
-    // formKey.currentState!.validate();
   }
 
   @override
@@ -64,9 +63,11 @@ class _SigninPageState extends State<SigninPage> {
               // BUTTONS!
               AuthGradientButton(
                 fnHandler: () async {
+                  if (!formKey.currentState!.validate()) return;
+
                   final res = await AuthRemoteRepositories().login(
-                    email: emailController.text,
-                    password: passwordController.text,
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
                   );
 
                   final val = switch (res) {
@@ -76,7 +77,7 @@ class _SigninPageState extends State<SigninPage> {
 
                   print(val);
                 },
-                text: "SIgnUp",
+                text: "Sign In",
               ),
 
               const SizedBox(height: 20),

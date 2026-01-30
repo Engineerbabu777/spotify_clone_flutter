@@ -10,6 +10,8 @@
 analyzer:
   errors:
     avoid_print: ignore
+  plugins:
+    - custom_lint
 include: package:flutter_lints/flutter.yaml
 
 linter:
