@@ -32,7 +32,10 @@ class AuthRemoteRepositories {
     }
   }
 
-  Future<void> login({required String email, required String password}) async {
+  Future<Either<Failure, UserModel>> login({
+    required String email,
+    required String password,
+  }) async {
     try {
       final response = await http.post(
         Uri.parse('http://127.0.0.1:8000/auth/login'),
@@ -40,10 +43,17 @@ class AuthRemoteRepositories {
         body: jsonEncode({'email': email, 'password': password}),
       );
 
-      print(response.body);
-      print(response.statusCode);
+      final resBodyMap = json.decode(response.body) as Map<String, dynamic>;
+
+      if (response.statusCode != 201) {
+        // HANDLE THE ERROR!
+        return Left(Failure(resBodyMap['detail']));
+      }
+
+      return Right(UserModel.fromMap(resBodyMap));
     } catch (e) {
       print(e.toString());
+      return Left(Failure(e.toString()));
     }
   }
 }
