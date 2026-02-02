@@ -1,23 +1,23 @@
 import 'package:client/core/theme/app_pallete.dart';
-import 'package:client/features/auth/repositories/auth_remote_repositories.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
-import 'package:fpdart/fpdart.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignUpPage extends ConsumerStatefulWidget {
   static MaterialPageRoute route() => MaterialPageRoute(
     builder: (context) {
       return SignUpPage();
     },
   );
+
   const SignUpPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  ConsumerState<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpPageState extends ConsumerState<SignUpPage> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -30,7 +30,6 @@ class _SignUpPageState extends State<SignUpPage> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
-    // formKey.currentState!.validate();
   }
 
   @override
@@ -65,23 +64,7 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 20),
 
               // BUTTONS!
-              AuthGradientButton(
-                fnHandler: () async {
-                  final res = await AuthRemoteRepositories().signup(
-                    name: nameController.text,
-                    email: emailController.text,
-                    password: passwordController.text,
-                  );
-
-                  final val = switch (res) {
-                    Left(value: final l) => l,
-                    Right(value: final r) => r,
-                  };
-
-                  print(val);
-                },
-                text: "SIgnUp",
-              ),
+              AuthGradientButton(fnHandler: () async {}, text: "SIgnUp"),
 
               const SizedBox(height: 20),
               GestureDetector(
