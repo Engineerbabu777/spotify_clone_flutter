@@ -1,6 +1,8 @@
 import 'package:client/core/theme/app_pallete.dart';
+import 'package:client/features/auth/view/pages/signin_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
+import 'package:client/features/auth/view/widgets/loader.dart';
 import 'package:client/features/auth/viewmodel/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,12 +38,31 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(authViewModelProvider)?.isLoading == true;
-    final error = ref.watch(authViewModelProvider)?.error != null;
+
+    ref.listen(authViewModelProvider, (prev, next) {
+      next?.when(
+        data: (data) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(content: Text('Account created. Please login!')),
+            );
+
+            Navigator.push(context, SigninPage.route());
+        },
+        error: (error, st) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(content: Text(error.toString())));
+        },
+        loading: () {},
+      );
+    });
 
     return Scaffold(
       appBar: AppBar(),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator.adaptive())
+          ? CustomLoader()
           : Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Form(

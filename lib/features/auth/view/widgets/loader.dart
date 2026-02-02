@@ -10,6 +10,6 @@ class CustomLoader extends StatefulWidget {
 class _CustomLoaderState extends State<CustomLoader> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Center(child: CircularProgressIndicator.adaptive());
   }
 }
