@@ -20,6 +20,8 @@ class AuthViewModel extends _$AuthViewModel {
     required String email,
     required String password,
   }) async {
+    state = const AsyncValue.loading();
+
     final res = await _authRemoteRepositories.signup(
       name: name,
       email: email,
@@ -27,8 +29,11 @@ class AuthViewModel extends _$AuthViewModel {
     );
 
     final val = switch (res) {
-      Left(value: final l) => l,
-      Right(value: final r) => r,
+      Left(value: final l) => state = AsyncValue.error(
+        l.message,
+        StackTrace.current,
+      ),
+      Right(value: final r) => state = AsyncValue.data(r),
     };
 
     print(val);
@@ -38,14 +43,19 @@ class AuthViewModel extends _$AuthViewModel {
     required String email,
     required String password,
   }) async {
+    state = const AsyncValue.loading();
+
     final res = await AuthRemoteRepositories().login(
       email: email,
       password: password,
     );
 
     final val = switch (res) {
-      Left(value: final l) => l,
-      Right(value: final r) => r,
+      Left(value: final l) => state = AsyncValue.error(
+        l.message,
+        StackTrace.current,
+      ),
+      Right(value: final r) => state = AsyncValue.data(r),
     };
 
     print(val);
