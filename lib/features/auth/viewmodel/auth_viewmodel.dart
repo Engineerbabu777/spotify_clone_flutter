@@ -1,4 +1,5 @@
 import 'package:client/features/auth/model/user_model.dart';
+import 'package:client/features/auth/repositories/auth_local_repository.dart';
 import 'package:client/features/auth/repositories/auth_remote_repositories.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -8,6 +9,8 @@ part 'auth_viewmodel.g.dart';
 @riverpod
 class AuthViewModel extends _$AuthViewModel {
   late AuthRemoteRepositories _authRemoteRepositories;
+  late AuthLocalRepository _authLocalRepository;
+
 
   @override
   AsyncValue<UserModel>? build() {
