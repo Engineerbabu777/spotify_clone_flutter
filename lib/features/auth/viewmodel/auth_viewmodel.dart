@@ -11,10 +11,11 @@ class AuthViewModel extends _$AuthViewModel {
   late AuthRemoteRepositories _authRemoteRepositories;
   late AuthLocalRepository _authLocalRepository;
 
-
   @override
   AsyncValue<UserModel>? build() {
     _authRemoteRepositories = ref.watch(authRemoteRepositoriesProvider);
+    _authLocalRepository = ref.watch(authLocalRepositoriesProvider);
+
     return null;
   }
 
@@ -58,9 +59,14 @@ class AuthViewModel extends _$AuthViewModel {
         l.message,
         StackTrace.current,
       ),
-      Right(value: final r) => state = AsyncValue.data(r),
+      Right(value: final r) => _loginSuccess(r),
     };
 
     print(val);
+  }
+
+  AsyncValue<UserModel>? _loginSuccess(UserModel user) {
+    _authLocalRepository.setToken(user.token);
+    return state = AsyncValue.data(user);
   }
 }
