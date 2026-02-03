@@ -5,14 +5,21 @@ class UserModel {
   final String email;
   final String name;
   final String id;
+  final String token;
 
-  UserModel({required this.email, required this.name, required this.id});
+  UserModel({
+    required this.email,
+    required this.name,
+    required this.id,
+    required this.token,
+  });
 
-  UserModel copyWith({String? email, String? name, String? id}) {
+  UserModel copyWith({String? email, String? name, String? id, String? token}) {
     return UserModel(
       email: email ?? this.email,
       name: name ?? this.name,
       id: id ?? this.id,
+      token: token ?? '',
     );
   }
 
@@ -25,6 +32,7 @@ class UserModel {
       email: map['email'] ?? "",
       name: map['name'] ?? "",
       id: map['id'] ?? "",
+      token: map['token'] ?? "",
     );
   }
 
