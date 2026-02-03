@@ -1,4 +1,5 @@
 import 'package:client/core/theme/app_pallete.dart';
+import 'package:client/core/utils/utils.dart';
 import 'package:client/features/auth/view/pages/signup_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
@@ -47,9 +48,7 @@ class _SigninPageState extends ConsumerState<SigninPage> {
           // Navigator.push(context, HomePage);
         },
         error: (error, st) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text(error.toString())));
+          showSnackbar(context, error.toString());
         },
         loading: () {},
       );
@@ -90,7 +89,12 @@ class _SigninPageState extends ConsumerState<SigninPage> {
                     AuthGradientButton(
                       fnHandler: () async {
                         if (!formKey.currentState!.validate()) return;
-                        ref.read(authViewModelProvider.notifier).signInUser(email: emailController.text, password: passwordController.text);
+                        ref
+                            .read(authViewModelProvider.notifier)
+                            .signInUser(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
                       },
                       text: "Sign In",
                     ),
