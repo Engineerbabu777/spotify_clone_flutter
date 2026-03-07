@@ -1,4 +1,5 @@
 import 'package:client/core/theme/app_pallete.dart';
+import 'package:client/core/utils/utils.dart';
 import 'package:client/features/auth/view/pages/signin_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
@@ -42,18 +43,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     ref.listen(authViewModelProvider, (prev, next) {
       next?.when(
         data: (data) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text('Account created. Please login!')),
-            );
+          showSnackbar(context, 'Account created. Please login!');
 
-            Navigator.push(context, SigninPage.route());
+          Navigator.push(context, SigninPage.route());
         },
         error: (error, st) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text(error.toString())));
+          showSnackbar(context, (error.toString()));
         },
         loading: () {},
       );
