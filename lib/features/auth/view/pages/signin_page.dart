@@ -41,9 +41,9 @@ class _SigninPageState extends ConsumerState<SigninPage> {
     ref.listen(authViewModelProvider, (prev, next) {
       next?.when(
         data: (data) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text('Login Successfully!')));
+          showSnackbar(context, 'Login Successfully!');
+
+          Navigator.push(context, SigninPage.route());
 
           // Navigator.push(context, HomePage);
         },
