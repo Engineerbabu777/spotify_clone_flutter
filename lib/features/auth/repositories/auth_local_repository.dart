@@ -21,10 +21,7 @@ class AuthLocalRepository {
     }
   }
 
-  String? getToken(String? token) {
-    if (token != null) {
-      return _sharedPreferences.getString('X-auth-token');
-    }
-    return null;
+  String? getToken() {
+    return _sharedPreferences.getString('X-auth-token');
   }
 }
