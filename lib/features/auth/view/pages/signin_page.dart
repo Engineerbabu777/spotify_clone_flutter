@@ -5,6 +5,7 @@ import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:client/features/auth/view/widgets/loader.dart';
 import 'package:client/features/auth/viewmodel/auth_viewmodel.dart';
+import 'package:client/features/home/view/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -47,7 +48,11 @@ class _SigninPageState extends ConsumerState<SigninPage> {
 
           Navigator.push(context, SigninPage.route());
 
-          // Navigator.push(context, HomePage);
+          Navigator.pushAndRemoveUntil(
+            context,
+            HomeScreen.route(),
+            (_) => false,
+          );
         },
         error: (error, st) {
           showSnackbar(context, error.toString());
