@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:client/core/theme/app_pallete.dart';
+import 'package:client/core/utils/utils.dart';
 import 'package:client/core/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,11 +21,26 @@ class UploadSongPage extends ConsumerStatefulWidget {
 class _UploadSongPageState extends ConsumerState<UploadSongPage> {
   final songNameController = TextEditingController();
   final artistNameController = TextEditingController();
+  File? selectedImage;
+  File? selectedAudio;
+
   Color selectedColor = Pallete.cardColor;
 
+  void selectAudio() async {
+    final pickedImage = await pickImage();
+
+    if (pickedImage != null) {
+      setState(() {
+        selectedImage = pickedImage;
+      });
+    }
+  }
+
+  void selectImage() {}
+
   // DISPOSE!
-  @override 
-  void dispose(){
+  @override
+  void dispose() {
     super.dispose();
     songNameController.dispose();
     artistNameController.dispose();
@@ -40,24 +58,30 @@ class _UploadSongPageState extends ConsumerState<UploadSongPage> {
           padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
           child: Column(
             children: [
-              DottedBorder(
-                options: RoundedRectDottedBorderOptions(
-                  radius: Radius.circular(10.0),
-                  color: Pallete.borderColor,
-                  dashPattern: [10, 4],
-                ),
-                child: SizedBox(
-                  height: 150,
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.folder_open, size: 40),
-                      SizedBox(height: 15),
-                      Text('Select the thumbnail for your song'),
-                    ],
-                  ),
-                ),
+              GestureDetector(
+                onTap: selectImage,
+
+                child: selectedImage != null
+                    ? Image.file(selectedImage!)
+                    : DottedBorder(
+                        options: RoundedRectDottedBorderOptions(
+                          radius: Radius.circular(10.0),
+                          color: Pallete.borderColor,
+                          dashPattern: [10, 4],
+                        ),
+                        child: SizedBox(
+                          height: 150,
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.folder_open, size: 40),
+                              SizedBox(height: 15),
+                              Text('Select the thumbnail for your song'),
+                            ],
+                          ),
+                        ),
+                      ),
               ),
 
               SizedBox(height: 40),
