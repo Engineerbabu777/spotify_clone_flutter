@@ -9,3 +9,17 @@ void showSnackbar(BuildContext context, String content) {
     ..showSnackBar(SnackBar(content: Text(content.toString())));
 }
 
+Future<File?> pickAudio() async {
+  try {
+    final filePickerResult = await FilePicker.platform.pickFiles(
+      type: FileType.audio,
+    );
+
+    if (filePickerResult != null) {
+      return File(filePickerResult.files.first.xFile.path);
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
