@@ -21,6 +21,12 @@ class _UploadSongPageState extends ConsumerState<UploadSongPage> {
   Color selectedColor = Pallete.cardColor;
 
   // DISPOSE!
+  @override 
+  void dispose(){
+    super.dispose();
+    songNameController.dispose();
+    artistNameController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
