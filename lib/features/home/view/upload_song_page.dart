@@ -27,6 +27,16 @@ class _UploadSongPageState extends ConsumerState<UploadSongPage> {
   Color selectedColor = Pallete.cardColor;
 
   void selectAudio() async {
+    final pickedAudio = await pickAudio();
+
+    if (pickedAudio != null) {
+      setState(() {
+        selectedAudio = pickedAudio;
+      });
+    }
+  }
+
+  void selectImage() async {
     final pickedImage = await pickImage();
 
     if (pickedImage != null) {
@@ -35,8 +45,6 @@ class _UploadSongPageState extends ConsumerState<UploadSongPage> {
       });
     }
   }
-
-  void selectImage() {}
 
   // DISPOSE!
   @override
@@ -60,9 +68,15 @@ class _UploadSongPageState extends ConsumerState<UploadSongPage> {
             children: [
               GestureDetector(
                 onTap: selectImage,
-
                 child: selectedImage != null
-                    ? Image.file(selectedImage!)
+                    ? SizedBox(
+                        height: 150,
+                        width: double.infinity,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          child: Image.file(selectedImage!, fit: BoxFit.cover),
+                        ),
+                      )
                     : DottedBorder(
                         options: RoundedRectDottedBorderOptions(
                           radius: Radius.circular(10.0),
@@ -89,7 +103,7 @@ class _UploadSongPageState extends ConsumerState<UploadSongPage> {
               CustomField(
                 hintText: "Pick Song",
                 readOnly: true,
-                onTap: () => {},
+                onTap: selectAudio,
               ),
               SizedBox(height: 20),
 
