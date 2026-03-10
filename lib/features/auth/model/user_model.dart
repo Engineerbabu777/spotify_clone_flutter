@@ -5,7 +5,7 @@ class UserModel {
   final String email;
   final String name;
   final String id;
-  final String token;
+  final String? token;
 
   UserModel({
     required this.email,

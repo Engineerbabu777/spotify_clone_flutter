@@ -23,7 +23,7 @@ class AuthRemoteRepositories {
     try {
       final response = await http.post(
         Uri.parse('${ServerConstant.serverURL}/auth/signup'),
-        headers: {'Content-Type': 'applcation/json'},
+        headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'name': name, 'email': email, 'password': password}),
       );
 
@@ -31,7 +31,7 @@ class AuthRemoteRepositories {
 
       if (response.statusCode != 201) {
         // HANDLE THE ERROR!
-        return Left(AppFailure(resBodyMap['detail']));
+        return Left(AppFailure(resBodyMap['detail'].toString()));
       }
 
       return Right(UserModel.fromMap(resBodyMap));
@@ -48,15 +48,15 @@ class AuthRemoteRepositories {
     try {
       final response = await http.post(
         Uri.parse('${ServerConstant.serverURL}/auth/login'),
-        headers: {'Content-Type': 'applcation/json'},
+        headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'email': email, 'password': password}),
       );
 
       final resBodyMap = json.decode(response.body) as Map<String, dynamic>;
 
-      if (response.statusCode != 201) {
+      if (response.statusCode != 200) {
         // HANDLE THE ERROR!
-        return Left(AppFailure(resBodyMap['detail']));
+        return Left(AppFailure(resBodyMap['detail'].toString()));
       }
 
       return Right(
@@ -72,7 +72,7 @@ class AuthRemoteRepositories {
 
   Future<Either<AppFailure, UserModel>> getLoggedInUser(String token) async {
     try {
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('${ServerConstant.serverURL}/auth/'),
         headers: {'x-auth-token': token},
       );
@@ -80,7 +80,7 @@ class AuthRemoteRepositories {
       final resBodyMap = json.decode(response.body) as Map<String, dynamic>;
 
       if (response.statusCode != 200) {
-        return Left(AppFailure(resBodyMap['detail']));
+        return Left(AppFailure(resBodyMap['detail'].toString()));
       }
 
       return Right(UserModel.fromMap(resBodyMap["user"]));

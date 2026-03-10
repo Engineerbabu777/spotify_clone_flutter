@@ -38,7 +38,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(authViewModelProvider)?.isLoading == true;
+    final isLoading = ref.watch(authViewModelProvider.select((val) => val?.isLoading == true));
 
     ref.listen(authViewModelProvider, (prev, next) {
       next?.when(
@@ -95,8 +95,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           await ref
                               .read(authViewModelProvider.notifier)
                               .signUpuser(
-                                name: nameController.text,
-                                email: emailController.text,
+                                name: nameController.text.trim(),
+                                email: emailController.text.trim(),
                                 password: passwordController.text,
                               );
                         }
@@ -107,7 +107,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     const SizedBox(height: 20),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, SignUpPage.route());
+                        Navigator.push(context, SigninPage.route());
                       },
                       child: RichText(
                         text: TextSpan(

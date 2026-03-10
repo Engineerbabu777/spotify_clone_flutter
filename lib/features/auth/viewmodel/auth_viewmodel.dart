@@ -53,7 +53,7 @@ class AuthViewModel extends _$AuthViewModel {
   }) async {
     state = const AsyncValue.loading();
 
-    final res = await AuthRemoteRepositories().login(
+    final res = await _authRemoteRepositories.login(
       email: email,
       password: password,
     );
@@ -74,13 +74,24 @@ class AuthViewModel extends _$AuthViewModel {
     return state = AsyncValue.data(user);
   }
 
-  Future<UserModel?> getData()async {
+  Future<UserModel?> getData() async {
     state = const AsyncValue.loading();
 
     final token = _authLocalRepository.getToken();
 
-    if(token!=null){
-      
+    if (token != null) {
+      final res = await _authRemoteRepositories.getLoggedInUser(token);
+
+      final val = switch (res) {
+        Left(value: final l) => state = AsyncValue.error(
+          l.message,
+          StackTrace.current,
+        ),
+        Right(value: final r) => state = AsyncValue.data(r),
+      };
+
+      return val.value;
     }
+    return null;
   }
 }

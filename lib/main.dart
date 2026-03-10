@@ -9,7 +9,10 @@ void main() async {
 
   final container = ProviderContainer();
 
-  container.read(authViewModelProvider.notifier).initSharedPrefrences();
+  await container.read(authViewModelProvider.notifier).initSharedPrefrences();
+  final user = await container.read(authViewModelProvider.notifier).getData();
+
+  print(user);
 
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 }

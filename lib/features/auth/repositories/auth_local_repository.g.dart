@@ -7,12 +7,11 @@ part of 'auth_local_repository.dart';
 // **************************************************************************
 
 String _$authLocalRepositoriesHash() =>
-    r'e8ffffcf87f6f12df4e3a0d46bce39758615132a';
+    r'c1e78481ea5c2ee2ca2cbc2663e118c2841f0734';
 
 /// See also [authLocalRepositories].
 @ProviderFor(authLocalRepositories)
-final authLocalRepositoriesProvider =
-    AutoDisposeProvider<AuthLocalRepository>.internal(
+final authLocalRepositoriesProvider = Provider<AuthLocalRepository>.internal(
   authLocalRepositories,
   name: r'authLocalRepositoriesProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +21,6 @@ final authLocalRepositoriesProvider =
   allTransitiveDependencies: null,
 );
 
-typedef AuthLocalRepositoriesRef = AutoDisposeProviderRef<AuthLocalRepository>;
+typedef AuthLocalRepositoriesRef = ProviderRef<AuthLocalRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
