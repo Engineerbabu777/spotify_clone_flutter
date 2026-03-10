@@ -23,3 +23,18 @@ Future<File?> pickAudio() async {
     return null;
   }
 }
+
+Future<File?> pickImage() async {
+  try {
+    final filePickerResult = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+    );
+
+    if (filePickerResult != null) {
+      return File(filePickerResult.files.first.xFile.path);
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
